@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html ng-app="calibrateApp">
+<head>
+    <title>Calibrate v0.0.1</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap-responsive.css"/>
+
+</head>
+<body>
+    <h1>Calibrate</h1>
+
+    <div ng-controller="LeapCursorCtrl" ng-style="cursorStyle()">
+        Leap
+    </div>
+
+    <div leap-motion-cursor>Cursor</div>
+
+    <div class="row-fluid">
+        <div class="span10">
+            <div id="calibrate-target">
+            </div>
+        </div>
+        <div class="span2">
+            <div>
+                <div class="row" ng-controller="WindowPositionCtrl">
+                    <b>Window</b>
+                    <p>
+                        <pre>{{window.x}}, {{window.y}}</pre>
+                    </p>
+                </div>
+                <div class="row" ng-controller="LeapPositionCtrl">
+                    <b>Index Finger Position</b>
+                    <div>
+                        <p>Position</p>
+                        <div ng-show="leap.indexFinger.valid">Valid</div>
+                        <div ng-hide="leap.indexFinger.valid">Invalid!</div>
+                        <pre>{{leap.indexFinger.position.x}} {{leap.indexFinger.position.y}} {{leap.indexFinger.position.z}}</pre>
+                        <p>Velocity</p>
+                        <pre>{{leap.indexFinger.velocity.length}}</pre>
+                        <p>Acceleration</p>
+                        <pre>{{leap.indexFinger.acceleration.length}}</pre>
+                        <p>Tool</p>
+                        <pre>{{leap.indexFinger.tool}}</pre>
+                    </div>
+                    <div>
+                        <p>FPS</p>
+                        <pre>{{leap.fps}}</pre>
+                        <p>Latency</p>
+                        <pre>{{leap.latency}}</pre>
+                    </div>
+                    <div>Count : {{leap.fingersCount}}</div>
+                    <button ng-click="disconnect()">Disconnect</button>
+                    <button ng-click="connect()">Connect</button>
+                </div>
+            </div>
+        </div>
+        <div ng-controller="DynamicsGraphicCtrl">
+            <!--<fs-area bind="dynamics.data" field="10"/>-->
+            <fs-date-histo bind="dynamics.data" field="10"/>
+        </div>
+    </div>
+
+    <script src="lib/jquery-1.8.1.js"></script>
+    <!--<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>-->
+
+    <script src="lib/sylvester.js"></script>
+    <!--<script src="lib/sylvester.src.js"></script>-->
+
+    <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="lib/leap.js"></script>
+    <!--<script src="https://leapmotion.com/leap.min.js"></script>-->
+
+    <script src="lib/easeljs-0.6.0.min.js"></script>
+    <!--<script src="http://code.createjs.com/easeljs-0.6.0.min.js"></script>-->
+
+    <script src="lib/angular/angular.js"></script>
+
+    <script src="js/byleapmotion.js"></script>
+    <script src="js/uileapmotion.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
