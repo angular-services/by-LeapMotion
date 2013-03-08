@@ -13,3 +13,18 @@ html, body {
     right: 0px;
     position: fixed;
 }
+
+.finger-0{
+    color: #dd1144;
+    font-weight: bold;
+}
+
+.block {
+    width: 100px;
+    height: 100px;
+    background-color: #002a80;
+}
+
+.leaped {
+    background-color: #6495ed;
+}

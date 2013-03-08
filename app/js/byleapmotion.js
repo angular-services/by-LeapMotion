@@ -46,7 +46,13 @@ angular.module('byLeapMotion', []).factory('LeapMotion', function() {
         fps: 0,
         latency: 0,
         fingersCount: 0,
+        fingers: [],
         frame: null,
+
+        gesture : {
+            valid: false,
+            state: {}
+        },
 
         indexFinger: {
             valid: false,
@@ -80,15 +86,26 @@ angular.module('byLeapMotion', []).factory('LeapMotion', function() {
                 this.controller.on('animationFrame', function() {
                     var frame = self.controller.frame();
                     self.frame = frame;
+                    self.fingers = [];
                     self.fingersCount = frame.pointables.length;
 
                     if(self.fingersCount == 0 && frame.valid) {
                         latencyCalibration = Date.now() - 0.001 * frame.timestamp;
                     }
 
-                    var pointable = getNearestPointable(frame);
+                    if (frame.gestures && frame.gestures.length > 0) {
+                        var gestures = frame.gestures;
+                        self.gesture.valid = true;
+                        self.gesture.state = gestures[0];
+                    } else {
+                        self.gesture.valid = false;
+                    }
+
+                    //var pointable = getNearestPointable(frame);
+                    var pointable = frame.pointables[0];
                     self.valid = frame.valid;
                     if (pointable) {
+
                         if(self.timestamp > 0) {
                             self.timestampDelta = frame.timestamp - self.timestamp;
                             self.fps = 1000000 / self.timestampDelta;
@@ -99,7 +116,6 @@ angular.module('byLeapMotion', []).factory('LeapMotion', function() {
                         self.timestamp = frame.timestamp;
                         self.indexFinger.valid = true;
                         self.indexFinger.tool = pointable.tool;
-
 
                         var x = pointable.tipPosition[0];
                         var y = pointable.tipPosition[1];
@@ -114,8 +130,10 @@ angular.module('byLeapMotion', []).factory('LeapMotion', function() {
                         positionMatrix.elements[1][2] = y;
                         var screenPositionMatrix = defaultCalibrationMatrix.x(positionMatrix);
 
-                        self.indexFinger.screenStyledPosition.x = Math.round(screenPositionMatrix.elements[0][2]) + 'px';
-                        self.indexFinger.screenStyledPosition.y = Math.round(screenPositionMatrix.elements[1][2]) + 'px';
+                        self.indexFinger.screenPosition.x = Math.round(screenPositionMatrix.elements[0][2]);
+                        self.indexFinger.screenPosition.y = Math.round(screenPositionMatrix.elements[1][2]);
+                        self.indexFinger.screenStyledPosition.x = self.indexFinger.screenPosition.x + 'px';
+                        self.indexFinger.screenStyledPosition.y = self.indexFinger.screenPosition.y + 'px';
 //                        self.indexFinger.screenStyledPosition.x = Math.round(x * 3) + 'px';
 //                        self.indexFinger.screenStyledPosition.y = Math.round(600 - y * 3) + 'px';
 
@@ -139,6 +157,56 @@ angular.module('byLeapMotion', []).factory('LeapMotion', function() {
                 });
             }
             return this.controller;
+        },
+
+        invalideFinger: {
+            valid: false,
+            screenStyledPosition: {x:'0px', y:'0px'}
+        },
+
+        getFinger: function(index) {
+            if(this.frame == null) {
+                return this.invalideFinger;
+            }
+
+            var pointables = this.frame.pointables;
+            if(index >= pointables.length) {
+                return this.invalideFinger;
+            }
+
+            var finger = this.fingers[index];
+            if(!!finger) {
+                return finger;
+            }
+
+            finger = {
+                valid: true,
+                screenPosition: {},
+                screenStyledPosition: {}
+            };
+
+            var pointable = pointables[index];
+            var x = pointable.tipPosition[0];
+            var y = pointable.tipPosition[1];
+            var z = pointable.tipPosition[2];
+
+            //multiply on calibrationMatrix;
+            positionMatrix.elements[0][2] = x;
+            positionMatrix.elements[1][2] = y;
+
+            var screenPositionMatrix = defaultCalibrationMatrix.x(positionMatrix);
+
+            finger.x = x;
+            finger.y = y;
+            finger.z = z;
+
+            finger.screenPosition.x = Math.round(screenPositionMatrix.elements[0][2]);
+            finger.screenPosition.y = Math.round(screenPositionMatrix.elements[1][2]);
+            finger.screenStyledPosition.x = finger.screenPosition.x + 'px';
+            finger.screenStyledPosition.y = finger.screenPosition.y + 'px';
+
+            this.fingers[index] = finger;
+            return finger;
         },
 
         connect: function() {

@@ -26,8 +26,10 @@ function LeapCursorCtrl($scope, LeapMotion) {
         return {
             display: (indexFinger.valid?'':'none'),
             position: 'fixed',
-            left: indexFinger.screenStyledPosition.x,
-            top: indexFinger.screenStyledPosition.y
+            marginLeft: indexFinger.screenStyledPosition.x,
+            marginTop: indexFinger.screenStyledPosition.y
+            //left: indexFinger.screenStyledPosition.x,
+            //top: indexFinger.screenStyledPosition.y
         };
     }
 }
