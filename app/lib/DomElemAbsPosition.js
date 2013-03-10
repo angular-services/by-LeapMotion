@@ -76,15 +76,18 @@
         return res;
     }
 
+    var api = {};
+    window.placement = api;
+
 //returns the absolute position of some element within document
-    window.getElementAbsolutePlacement = function(element) {
+    api.getElementAbsolutePlacement = function(element) {
         var result = getElementAbsolutePos(element);
         result.width = element.offsetWidth;
         result.height = element.offsetHeight;
         return result;
     }
 
-    window.getElementAbsolutePos = getElementAbsolutePos;
+    api.getElementAbsolutePos = getElementAbsolutePos;
 
     function getElementAbsolutePos(element) {
         var res = new Object();

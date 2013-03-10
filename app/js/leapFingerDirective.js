@@ -28,12 +28,13 @@ myLeapMotion.directive('leapFinger', function(LeapMotion) {
             var leap = scope.leap;
 
             scope.$watch('finger', function() {
-                if(scope.finger == null) {
-                    getFinger = getIndexFinger;
-                } else {
-                    getFinger = function() {
-                        return getFingerById(scope.finger);
-                    }
+                var finger = 0;
+                if(scope.finger != null && scope.finger.length > 0) {
+                    finger = scope.finger;
+                }
+
+                getFinger = function() {
+                    return getFingerById(finger);
                 }
             });
 
@@ -52,9 +53,7 @@ myLeapMotion.directive('leapFinger', function(LeapMotion) {
                 style.display = (finger.valid?'':'none');
                 if(finger.valid) {
                     style.position = 'fixed';
-//                    style.marginLeft = finger.screenStyledPosition.x;
                     style.left = finger.screenStyledPosition.x;
-//                    style.marginTop = finger.screenStyledPosition.y;
                     style.top = finger.screenStyledPosition.y;
                     if(scope.zooming) {
                         style.fontSize = Math.floor(30 - 0.1 * finger.z) + 'px';
