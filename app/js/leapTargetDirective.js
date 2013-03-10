@@ -29,10 +29,9 @@ myLeapMotion.directive('leapTarget', function(LeapMotion) {
             var domElement = elm[0];
 
             (function refreshPosition() {
-                var fingers = scope.leap.fingers;
                 var fingersIn = 0;
                 var indexFingerIn = false;
-                for (var index = 0, count = fingers.length; index < count; index++) {
+                for (var index = 0, count = scope.leap.fingersCount; index < count; index++) {
                     var finger = leap.getFinger(index);
                     if (hitTest(finger.screenPosition.x, finger.screenPosition.y, domElement)) {
                         if (index == 0) {

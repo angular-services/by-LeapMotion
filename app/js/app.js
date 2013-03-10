@@ -5,6 +5,12 @@ var app = angular.module('calibrateApp', [
     'uiLeapMotion'
 ]);
 
+function BlocksCtrl($scope) {
+    $scope.blocks = [];
+    for (var i = 0, l = 40; i < l; i++) {
+        $scope.blocks.push(Math.random());
+    }
+}
 
 function WindowPositionCtrl($scope, $timeout) {
     $scope.window = {x:0, y:0};
