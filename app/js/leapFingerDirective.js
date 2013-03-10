@@ -1,4 +1,8 @@
-angular.module('uiLeapMotion', ['byLeapMotion']).directive('leapMotionCursor', function(LeapMotion) {
+'use strict';
+
+var myLeapMotion = angular.module('uiLeapMotion', ['byLeapMotion']);
+
+myLeapMotion.directive('leapFinger', function(LeapMotion) {
     // shim layer with setTimeout fallback
     var requestAnimationFrame = (function(){
         return  window.requestAnimationFrame   ||
@@ -12,7 +16,7 @@ angular.module('uiLeapMotion', ['byLeapMotion']).directive('leapMotionCursor', f
     return {
         restrict: 'EACM',
         scope: {
-            finger: '=',
+            finger: '@leapFinger',
             zooming: '='
         },
         link: function(scope, elm, attrs, ctrl) {
@@ -48,8 +52,10 @@ angular.module('uiLeapMotion', ['byLeapMotion']).directive('leapMotionCursor', f
                 style.display = (finger.valid?'':'none');
                 if(finger.valid) {
                     style.position = 'fixed';
-                    style.marginLeft = finger.screenStyledPosition.x;
-                    style.marginTop = finger.screenStyledPosition.y;
+//                    style.marginLeft = finger.screenStyledPosition.x;
+                    style.left = finger.screenStyledPosition.x;
+//                    style.marginTop = finger.screenStyledPosition.y;
+                    style.top = finger.screenStyledPosition.y;
                     if(scope.zooming) {
                         style.fontSize = Math.floor(30 - 0.1 * finger.z) + 'px';
                     }

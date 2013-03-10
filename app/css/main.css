@@ -19,12 +19,17 @@ html, body {
     font-weight: bold;
 }
 
-.block {
+.target-block {
     width: 100px;
     height: 100px;
-    background-color: #002a80;
+    background-color: #6495ed;
+    float: left;
 }
 
-.leaped {
-    background-color: #6495ed;
+.target-blocks {
+    width: 800px;
+}
+
+.leaped-block {
+    background-color: #98b7ed;
 }
