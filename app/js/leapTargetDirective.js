@@ -19,7 +19,8 @@ myLeapMotion.directive('leapTarget', function(LeapMotion) {
     return {
         restrict: 'EACM',
         scope: {
-            classOnLeapOver: '@'
+            classOnFingerOver: '@',
+            classOnIndexFingerOver: '@'
         },
         link: function(scope, elm, attrs, ctrl) {
             scope.leap = LeapMotion;
@@ -30,18 +31,30 @@ myLeapMotion.directive('leapTarget', function(LeapMotion) {
             (function refreshPosition() {
                 var fingers = scope.leap.fingers;
                 var fingersIn = 0;
+                var indexFingerIn = false;
                 for (var index = 0, count = fingers.length; index < count; index++) {
                     var finger = leap.getFinger(index);
                     if (hitTest(finger.screenPosition.x, finger.screenPosition.y, domElement)) {
+                        if (index == 0) {
+                            indexFingerIn = true;
+                        }
                         fingersIn++;
                     }
                 }
 
-                if (scope.classOnLeapOver) {
+                if (scope.classOnFingerOver) {
                     if (fingersIn > 0) {
-                        elm.addClass(scope.classOnLeapOver);
+                        elm.addClass(scope.classOnFingerOver);
                     } else {
-                        elm.removeClass(scope.classOnLeapOver);
+                        elm.removeClass(scope.classOnFingerOver);
+                    }
+                }
+
+                if (scope.classOnIndexFingerOver) {
+                    if (indexFingerIn) {
+                        elm.addClass(scope.classOnIndexFingerOver);
+                    } else {
+                        elm.removeClass(scope.classOnIndexFingerOver);
                     }
                 }
 

@@ -30,6 +30,10 @@ html, body {
     width: 800px;
 }
 
-.leaped-block {
+.fingered-block {
     background-color: #98b7ed;
+}
+
+.index-fingered-block {
+    background-color: #b7d1ed;
 }
