@@ -15,15 +15,15 @@
     <!--<div ng-controller="LeapCursorCtrl" ng-style="cursorStyle()">Binded Cursor</div>-->
 
     <div leap-finger     class="finger-0" zooming="true">1st finger {{finger}}</div>
-    <div leap-finger="1" class="finger-1">2nd finger</div>
-    <div leap-finger="2" class="finger-2">3rd finger</div>
-    <div leap-finger="3" class="finger-3">4th finger</div>
-    <div leap-finger="4" class="finger-4">5th finger</div>
-    <div leap-finger="5" class="finger-5">6th finger</div>
-    <div leap-finger="6" class="finger-6">7th finger</div>
-    <div leap-finger="7" class="finger-7">8th finger</div>
-    <div leap-finger="8" class="finger-8">9th finger</div>
-    <div leap-finger="9" class="finger-9">xth finger</div>
+    <div leap-finger="1" class="finger-1 finger-none-0">2nd finger</div>
+    <div leap-finger="2" class="finger-2 finger-none-0">3rd finger</div>
+    <div leap-finger="3" class="finger-3 finger-none-0">4th finger</div>
+    <div leap-finger="4" class="finger-4 finger-none-0">5th finger</div>
+    <div leap-finger="5" class="finger-5 finger-none-0">6th finger</div>
+    <div leap-finger="6" class="finger-6 finger-none-0">7th finger</div>
+    <div leap-finger="7" class="finger-7 finger-none-0">8th finger</div>
+    <div leap-finger="8" class="finger-8 finger-none-0">9th finger</div>
+    <div leap-finger="9" class="finger-9 finger-none-0">xth finger</div>
 
     <div class="row-fluid">
         <div class="span10">
@@ -31,6 +31,9 @@
             <div class="target-blocks" ng-controller="BlocksCtrl">
                 <div ng-repeat="block in blocks">
                     <div leap-target
+                         on-any-finger-over="console.log('on-any-finger-over')"
+                         on-finger-over="console.log('index-fingered-block')"
+                         on-fingers-out="console.log('unfingered-block')"
                          class-on-any-finger-over="fingered-block"
                          class-on-finger-over="index-fingered-block"
                          class-on-fingers-out="unfingered-block"

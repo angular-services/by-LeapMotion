@@ -12,11 +12,16 @@ html, body {
     left: 0px;
     right: 0px;
     position: fixed;
+    color: #ffffff;
 }
 
 .finger-0{
-    color: #dd1144;
+    color: #ffffff;
     font-weight: bold;
+}
+
+.finger-none-0{
+    color: #ffffff;
 }
 
 .target-block {
@@ -30,13 +35,17 @@ html, body {
 }
 
 .unfingered-block {
-    background-color: #6495ed;
+    background-color: #1f4eed;
 }
 
 .fingered-block {
-    background-color: #98b7ed;
+    background-color: #e4ed12;
 }
 
 .index-fingered-block {
-    background-color: #b7d1ed;
+    background-color: #ed9115;
+}
+
+.body {
+    background-color: #1f4eed;
 }

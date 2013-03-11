@@ -21,7 +21,12 @@ myLeapMotion.directive('leapTarget', function(LeapMotion) {
         scope: {
             classOnAnyFingerOver: '@',
             classOnFingerOver: '@',  //mean index finger
-            classOnFingersOut: '@'
+            classOnFingersOut: '@',
+
+            //delegate
+            onAnyFingerOver: '&',
+            onFingerOver: '&',  //mean index finger
+            onFingersOut: '&'
         },
         link: function(scope, elm, attrs, ctrl) {
             scope.leap = LeapMotion;
@@ -47,6 +52,12 @@ myLeapMotion.directive('leapTarget', function(LeapMotion) {
                         elm.addClass(scope.classOnAnyFingerOver);
                     } else {
                         elm.removeClass(scope.classOnAnyFingerOver);
+                    }
+                }
+
+                if (scope.onFingerOver) {
+                    if (fingersIn > 0) {
+                        scope.onFingerOver();
                     }
                 }
 
