@@ -20,7 +20,8 @@ myLeapMotion.directive('leapTarget', function(LeapMotion) {
         restrict: 'EACM',
         scope: {
             classOnAnyFingerOver: '@',
-            classOnFingerOver: '@'  //mean index finger
+            classOnFingerOver: '@',  //mean index finger
+            classOnFingersOut: '@'
         },
         link: function(scope, elm, attrs, ctrl) {
             scope.leap = LeapMotion;
@@ -57,12 +58,20 @@ myLeapMotion.directive('leapTarget', function(LeapMotion) {
                     }
                 }
 
+                if (scope.classOnFingersOut) {
+                    if (fingersIn <= 0) {
+                        elm.addClass(scope.classOnFingersOut);
+                    } else {
+                        elm.removeClass(scope.classOnFingersOut);
+                    }
+                }
+
                 requestAnimationFrame(refreshPosition);
             })();
 
             function hitTest(x, y, domElement) {
                 var rect = placement.getElementAbsolutePlacement(domElement);
-                return x >= rect.x && y >= rect.y && x <= rect.x + rect.width && y <= rect.y + rect.width;
+                return x >= rect.x && x <= rect.x + rect.width && y >= rect.y && y <= rect.y + rect.height;
             }
         }
     }

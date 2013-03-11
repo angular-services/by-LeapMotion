@@ -22,12 +22,15 @@ html, body {
 .target-block {
     width: 100px;
     height: 100px;
-    background-color: #6495ed;
     float: left;
 }
 
 .target-blocks {
     width: 800px;
+}
+
+.unfingered-block {
+    background-color: #6495ed;
 }
 
 .fingered-block {

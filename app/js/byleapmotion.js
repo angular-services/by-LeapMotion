@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('byLeapMotion', []).factory('LeapMotion', function() {
-    var sx = 4;
-    var sy = -4;
+    var sx = 5;
+    var sy = -5;
     var tx = window.innerHeight / 2;
     var ty = window.innerWidth / 2;
 
