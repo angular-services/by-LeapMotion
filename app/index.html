@@ -27,13 +27,14 @@
 
     <div class="row-fluid">
         <div class="span10">
-            <h1>Fingers</h1>
             <div class="target-blocks" ng-controller="BlocksCtrl">
+                <h1>Fingers</h1>
                 <div ng-repeat="block in blocks">
+                    <!--on-any-finger-over="console.log('on-any-finger-over')"
+                    on-finger-over="console.log('index-fingered-block')"
+                    on-fingers-out="console.log('unfingered-block')"-->
                     <div leap-target
-                         on-any-finger-over="console.log('on-any-finger-over')"
-                         on-finger-over="console.log('index-fingered-block')"
-                         on-fingers-out="console.log('unfingered-block')"
+                         on-finger-over="alert('hello')"
                          class-on-any-finger-over="fingered-block"
                          class-on-finger-over="index-fingered-block"
                          class-on-fingers-out="unfingered-block"
