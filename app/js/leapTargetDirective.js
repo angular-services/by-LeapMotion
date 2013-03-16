@@ -25,14 +25,46 @@ myLeapMotion.directive('leapTarget', function(LeapMotion) {
 
             //delegate
             onAnyFingerOver: '&',
+            onAllFingersOut: '&',
             onFingerOver: '&',  //mean index finger
-            onFingersOut: '&'
+            onFingerOut: '&'
         },
         link: function(scope, elm, attrs, ctrl) {
             scope.leap = LeapMotion;
 
             var leap = scope.leap;
             var domElement = elm[0];
+
+            var fingerIsOver;
+            setFingerIsOver(false);
+            function setFingerIsOver(value) {
+                if (fingerIsOver == value) return;
+                fingerIsOver = value;
+                if (value) {
+                    if (scope.onFingerOver) scope.onFingerOver({value:elm});
+                    if (scope.classOnAnyFingerOver) elm.addClass(scope.classOnAnyFingerOver);
+                } else {
+                    if (scope.onFingerOut) scope.onFingerOut({value:elm});
+                    if (scope.classOnAnyFingerOver) elm.removeClass(scope.classOnAnyFingerOver);
+                }
+            }
+
+            var anyFingerIsOver;
+            setAnyFingerIsOver(false);
+            function setAnyFingerIsOver(value) {
+                if (anyFingerIsOver == value) return;
+                anyFingerIsOver = value;
+                if (value) {
+                    if (scope.onAnyFingerOver) scope.onAnyFingerOver();
+                    //if (scope.classOnFingerOver && !fingerIsOver) elm.addClass(scope.classOnFingerOver);
+                    if (scope.classOnFingerOver) elm.addClass(scope.classOnFingerOver);
+                    if (scope.classOnFingersOut) elm.removeClass(scope.classOnFingersOut);
+                } else {
+                    if (scope.onAllFingersOut) scope.onAllFingersOut();
+                    if (scope.classOnFingerOver) elm.removeClass(scope.classOnFingerOver);
+                    if (scope.classOnFingersOut) elm.addClass(scope.classOnFingersOut);
+                }
+            }
 
             (function refreshPosition() {
                 var fingersIn = 0;
@@ -47,35 +79,8 @@ myLeapMotion.directive('leapTarget', function(LeapMotion) {
                     }
                 }
 
-                if (scope.classOnAnyFingerOver) {
-                    if (fingersIn > 0) {
-                        elm.addClass(scope.classOnAnyFingerOver);
-                    } else {
-                        elm.removeClass(scope.classOnAnyFingerOver);
-                    }
-                }
-
-                if (scope.onFingerOver) {
-                    if (fingersIn > 0) {
-                        scope.onFingerOver();
-                    }
-                }
-
-                if (scope.classOnFingerOver) {
-                    if (indexFingerIn) {
-                        elm.addClass(scope.classOnFingerOver);
-                    } else {
-                        elm.removeClass(scope.classOnFingerOver);
-                    }
-                }
-
-                if (scope.classOnFingersOut) {
-                    if (fingersIn <= 0) {
-                        elm.addClass(scope.classOnFingersOut);
-                    } else {
-                        elm.removeClass(scope.classOnFingersOut);
-                    }
-                }
+                setFingerIsOver(indexFingerIn);
+                setAnyFingerIsOver(fingersIn > 0);
 
                 requestAnimationFrame(refreshPosition);
             })();

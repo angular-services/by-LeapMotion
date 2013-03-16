@@ -7,6 +7,22 @@ var app = angular.module('calibrateApp', [
 
 function BlocksCtrl($scope) {
     $scope.blocks = [];
+    $scope.fingerOver = function(value) {
+        console.log('fingerOver!', value);
+    }
+
+    $scope.fingerOut = function(value) {
+        console.log('fingerOut!', value);
+    }
+
+    $scope.anyFingerOver = function(value) {
+        console.log('anyFingerOver!', value);
+    }
+
+    $scope.allFingersOut = function(value) {
+        console.log('allFingersOut!', value);
+    }
+
     for (var i = 0, l = 40; i < l; i++) {
         $scope.blocks.push(Math.random());
     }
