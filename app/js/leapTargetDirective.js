@@ -41,11 +41,19 @@ myLeapMotion.directive('leapTarget', function(LeapMotion) {
                 if (fingerIsOver == value) return;
                 fingerIsOver = value;
                 if (value) {
-                    if (scope.onFingerOver) scope.onFingerOver({value:elm});
-                    if (scope.classOnAnyFingerOver) elm.addClass(scope.classOnAnyFingerOver);
+                    if (scope.onFingerOver) {
+                        scope.onFingerOver(elm);
+                    }
+                    if (scope.classOnAnyFingerOver) {
+                        elm.addClass(scope.classOnAnyFingerOver);
+                    }
                 } else {
-                    if (scope.onFingerOut) scope.onFingerOut({value:elm});
-                    if (scope.classOnAnyFingerOver) elm.removeClass(scope.classOnAnyFingerOver);
+                    if (scope.onFingerOut) {
+                        scope.onFingerOut(elm);
+                    }
+                    if (scope.classOnAnyFingerOver) {
+                        elm.removeClass(scope.classOnAnyFingerOver);
+                    }
                 }
             }
 
@@ -55,14 +63,25 @@ myLeapMotion.directive('leapTarget', function(LeapMotion) {
                 if (anyFingerIsOver == value) return;
                 anyFingerIsOver = value;
                 if (value) {
-                    if (scope.onAnyFingerOver) scope.onAnyFingerOver();
-                    //if (scope.classOnFingerOver && !fingerIsOver) elm.addClass(scope.classOnFingerOver);
-                    if (scope.classOnFingerOver) elm.addClass(scope.classOnFingerOver);
-                    if (scope.classOnFingersOut) elm.removeClass(scope.classOnFingersOut);
+                    if (scope.onAnyFingerOver) {
+                        scope.onAnyFingerOver();
+                    }
+                    if (scope.classOnFingerOver) {
+                        elm.addClass(scope.classOnFingerOver);
+                    }
+                    if (scope.classOnFingersOut) {
+                        elm.removeClass(scope.classOnFingersOut);
+                    }
                 } else {
-                    if (scope.onAllFingersOut) scope.onAllFingersOut();
-                    if (scope.classOnFingerOver) elm.removeClass(scope.classOnFingerOver);
-                    if (scope.classOnFingersOut) elm.addClass(scope.classOnFingersOut);
+                    if (scope.onAllFingersOut) {
+                        scope.onAllFingersOut();
+                    }
+                    if (scope.classOnFingerOver) {
+                        elm.removeClass(scope.classOnFingerOver);
+                    }
+                    if (scope.classOnFingersOut) {
+                        elm.addClass(scope.classOnFingersOut);
+                    }
                 }
             }
 

@@ -38,8 +38,8 @@ html, body {
     background-color: #1f4eed;
 }
 
-.fingered-block {
-    background-color: #e4ed12;
+.fingered-block  {
+    background-color: #e4ed12 !important;
 }
 
 .index-fingered-block {
